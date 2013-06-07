@@ -25,7 +25,7 @@ public class AdManager {
 	private String mUniqueId1;
 	private String mUniqueId2;
 	private boolean mIncludeLocation;
-	private static Context mContext;
+	private static Activity mActivity;
 	private Thread mRequestThread;
 	private Handler mHandler;
 	private AdRequest mRequest = null;
@@ -52,10 +52,10 @@ public class AdManager {
 
 	}
 
-	public AdManager(Context ctx, final String requestURL, final String publisherId,
+	public AdManager(Activity activity, final String requestURL, final String publisherId,
 			final boolean includeLocation)
 					throws IllegalArgumentException {
-		AdManager.setmContext(ctx);
+		AdManager.setmActivity(activity);
 		this.requestURL = requestURL;
 		this.mPublisherId = publisherId;
 		this.mIncludeLocation = includeLocation;
@@ -256,7 +256,7 @@ public class AdManager {
 	}
 
 	public void showAd() {
-		Activity activity = (Activity) getContext();
+		Activity activity = (Activity) getActivity();
 
 		if ((mResponse == null)
 				|| (mResponse.getType() == Const.NO_AD)
@@ -267,7 +267,7 @@ public class AdManager {
 		RichMediaAd ad = mResponse;
 		boolean result = false;
 		try {
-			if (Util.isNetworkAvailable(getContext())) {
+			if (Util.isNetworkAvailable(getActivity())) {
 				ad.setTimestamp(System.currentTimeMillis());
 				Intent intent = new Intent(activity,
 						RichMediaActivity.class);
@@ -287,9 +287,9 @@ public class AdManager {
 	}
 
 	private void initialize() throws IllegalArgumentException {
-		mUserAgent = Util.getDefaultUserAgentString(getContext());
-		this.mUniqueId1 = Util.getTelephonyDeviceId(getContext());
-		this.mUniqueId2 = Util.getDeviceId(getContext());
+		mUserAgent = Util.getDefaultUserAgentString(getActivity());
+		this.mUniqueId1 = Util.getTelephonyDeviceId(getActivity());
+		this.mUniqueId2 = Util.getDeviceId(getActivity());
 		if ((mPublisherId == null) || (mPublisherId.length() == 0)) {
 			throw new IllegalArgumentException(
 					"User Id cannot be null or empty");
@@ -298,8 +298,8 @@ public class AdManager {
 			throw new IllegalArgumentException(
 					"System Device Id cannot be null or empty");
 		}
-		mEnabled = (Util.getMemoryClass(getContext()) > 16);
-		Util.initializeAnimations(getContext());
+		mEnabled = (Util.getMemoryClass(getActivity()) > 16);
+		Util.initializeAnimations(getActivity());
 
 	}
 
@@ -349,7 +349,7 @@ public class AdManager {
 		}
 		Location location = null;
 		if (this.mIncludeLocation) {
-			location = Util.getLocation(getContext());
+			location = Util.getLocation(getActivity());
 		}
 		if (location != null) {
 			mRequest.setLatitude(location.getLatitude());
@@ -358,7 +358,7 @@ public class AdManager {
 			mRequest.setLatitude(0.0);
 			mRequest.setLongitude(0.0);
 		}
-		mRequest.setConnectionType(Util.getConnectionType(getContext()));
+		mRequest.setConnectionType(Util.getConnectionType(getActivity()));
 		mRequest.setIpAddress(Util.getLocalIpAddress());
 		mRequest.setTimestamp(System.currentTimeMillis());
 
@@ -367,16 +367,16 @@ public class AdManager {
 		return mRequest;
 	}
 
-	private Context getContext() {
-		return getmContext();
+	private Context getActivity() {
+		return getmActivity();
 	}
 
-	private static Context getmContext() {
-		return mContext;
+	private static Context getmActivity() {
+		return mActivity;
 	}
 
-	private static void setmContext(Context mContext) {
-		AdManager.mContext = mContext;
+	private static void setmActivity(Activity mActivity) {
+		AdManager.mActivity = mActivity;
 	}
 
 }
