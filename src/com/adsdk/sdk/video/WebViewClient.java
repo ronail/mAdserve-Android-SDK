@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.webkit.WebView;
 
@@ -41,7 +42,8 @@ public class WebViewClient extends android.webkit.WebViewClient {
 			url = url.substring(14);
 			Intent intent = new Intent("android.intent.action.VIEW",
 					Uri.parse(url));
-			mActivity.startActivity(intent);
+			if (!view.getContext().getPackageManager().queryIntentActivities(intent, 0).isEmpty())	// prevent throwing ActivityNotFoundException
+				mActivity.startActivity(intent);
 			return true;
 		}
 		if (url.startsWith("mfox:replayvideo")) {
