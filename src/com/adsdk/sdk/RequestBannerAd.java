@@ -108,88 +108,88 @@ public class RequestBannerAd extends RequestAd<BannerAd> {
 			List<String> types = Arrays.asList("imageAd", "textAd", "mraidAd", "noAd");
 			int typeIndex = types.indexOf(type);
 			
-//			switch(typeIndex) {
-			if ("imageAd".equalsIgnoreCase(type)) {
-//			case 0:
+			switch(typeIndex) {
+//			if ("imageAd".equalsIgnoreCase(type)) {
+			case 0:
 				response.setType(Const.IMAGE);
-				response.setBannerWidth(this.getValueAsInt(doc, "bannerwidth"));
-				response.setBannerHeight(this
-						.getValueAsInt(doc, "bannerheight"));
-				final ClickType clickType = ClickType.getValue(this.getValue(
-						doc, "clicktype"));
-				response.setClickType(clickType);
-				response.setClickUrl(this.getValue(doc, "clickurl"));
-				response.setImageUrl(this.getValue(doc, "imageurl"));
-				response.setRefresh(this.getValueAsInt(doc, "refresh"));
-				response.setScale(this.getValueAsBoolean(doc, "scale"));
-				response.setSkipPreflight(this.getValueAsBoolean(doc,
-						"skippreflight"));
-//				break;
-			} else if ("textAd".equalsIgnoreCase(type)) {
-//			case 1:
-				response.setType(Const.TEXT);
-				response.setText(this.getValue(doc, "htmlString"));
-				{
-					String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
-					if (skipOverlay != null){
-						response.setSkipOverlay(Integer.parseInt(skipOverlay));
-					}
-				}
-				final ClickType clickType = ClickType.getValue(this.getValue(
-						doc, "clicktype"));
-				response.setClickType(clickType);
-				response.setClickUrl(this.getValue(doc, "clickurl"));
-				response.setRefresh(this.getValueAsInt(doc, "refresh"));
-				response.setScale(this.getValueAsBoolean(doc, "scale"));
-				response.setSkipPreflight(this.getValueAsBoolean(doc,
-						"skippreflight"));
-//				break;
-			} else if ("mraidAd".equalsIgnoreCase(type)) {
-//			case 2:
-				response.setType(Const.MRAID);
-				response.setText(this.getValue(doc, "htmlString"));
-				String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
-				if (skipOverlay != null){
-					response.setSkipOverlay(Integer.parseInt(skipOverlay));
-				}
-				final ClickType clickType = ClickType.getValue(this.getValue(
-						doc, "clicktype"));
-				response.setClickType(clickType);
-				response.setClickUrl(this.getValue(doc, "clickurl"));
-				response.setUrlType(this.getValue(doc, "urltype"));
-				response.setRefresh(0);
-				response.setScale(this.getValueAsBoolean(doc, "scale"));
-				response.setSkipPreflight(this.getValueAsBoolean(doc,
-						"skippreflight"));
-			} else if ("noAd".equalsIgnoreCase(type))
-//				break;
-//			case 3:
-				response.setType(Const.NO_AD);
-			else
-//				default:
-				throw new RequestException("Unknown response type " + type);
-//			}
-			
-//			if (typeIndex != 3) {
 //				response.setBannerWidth(this.getValueAsInt(doc, "bannerwidth"));
 //				response.setBannerHeight(this
 //						.getValueAsInt(doc, "bannerheight"));
 //				final ClickType clickType = ClickType.getValue(this.getValue(
 //						doc, "clicktype"));
 //				response.setClickType(clickType);
-//				if (typeIndex != 0) {
-//					response.setText(this.getValue(doc, "htmlString"));
+//				response.setClickUrl(this.getValue(doc, "clickurl"));
+//				response.setImageUrl(this.getValue(doc, "imageurl"));
+//				response.setRefresh(this.getValueAsInt(doc, "refresh"));
+//				response.setScale(this.getValueAsBoolean(doc, "scale"));
+//				response.setSkipPreflight(this.getValueAsBoolean(doc,
+//						"skippreflight"));
+				break;
+//			} else if ("textAd".equalsIgnoreCase(type)) {
+			case 1:
+				response.setType(Const.TEXT);
+//				response.setText(this.getValue(doc, "htmlString"));
+//				{
 //					String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
 //					if (skipOverlay != null){
 //						response.setSkipOverlay(Integer.parseInt(skipOverlay));
 //					}
 //				}
+//				final ClickType clickType = ClickType.getValue(this.getValue(
+//						doc, "clicktype"));
+//				response.setClickType(clickType);
+//				response.setClickUrl(this.getValue(doc, "clickurl"));
+//				response.setRefresh(this.getValueAsInt(doc, "refresh"));
 //				response.setScale(this.getValueAsBoolean(doc, "scale"));
 //				response.setSkipPreflight(this.getValueAsBoolean(doc,
 //						"skippreflight"));
+				break;
+//			} else if ("mraidAd".equalsIgnoreCase(type)) {
+			case 2:
+				response.setType(Const.MRAID);
+//				response.setText(this.getValue(doc, "htmlString"));
+//				String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
+//				if (skipOverlay != null){
+//					response.setSkipOverlay(Integer.parseInt(skipOverlay));
+//				}
+//				final ClickType clickType = ClickType.getValue(this.getValue(
+//						doc, "clicktype"));
+//				response.setClickType(clickType);
 //				response.setClickUrl(this.getValue(doc, "clickurl"));
-//				response.setRefresh(typeIndex == 2 ? 0 : this.getValueAsInt(doc, "refresh"));
-//			}
+				response.setUrlType(this.getValue(doc, "urltype"));
+//				response.setRefresh(0);
+//				response.setScale(this.getValueAsBoolean(doc, "scale"));
+//				response.setSkipPreflight(this.getValueAsBoolean(doc,
+//						"skippreflight"));
+//			} else if ("noAd".equalsIgnoreCase(type))
+				break;
+			case 3:
+				response.setType(Const.NO_AD);
+//			else
+				default:
+				throw new RequestException("Unknown response type " + type);
+			}
+			
+			if (typeIndex != 3) {
+				response.setBannerWidth(this.getValueAsInt(doc, "bannerwidth"));
+				response.setBannerHeight(this
+						.getValueAsInt(doc, "bannerheight"));
+				final ClickType clickType = ClickType.getValue(this.getValue(
+						doc, "clicktype"));
+				response.setClickType(clickType);
+				if (typeIndex != 0) {
+					response.setText(this.getValue(doc, "htmlString"));
+					String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
+					if (skipOverlay != null){
+						response.setSkipOverlay(Integer.parseInt(skipOverlay));
+					}
+				}
+				response.setScale(this.getValueAsBoolean(doc, "scale"));
+				response.setSkipPreflight(this.getValueAsBoolean(doc,
+						"skippreflight"));
+				response.setClickUrl(this.getValue(doc, "clickurl"));
+				response.setRefresh(typeIndex == 2 ? 0 : this.getValueAsInt(doc, "refresh"));
+			}
 
 		} catch (final ParserConfigurationException e) {
 			throw new RequestException("Cannot parse Response", e);

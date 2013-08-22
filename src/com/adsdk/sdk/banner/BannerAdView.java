@@ -75,12 +75,12 @@ public class BannerAdView extends RelativeLayout {
 
 	private final Handler updateHandler = new Handler();
 
-	public void setWidth(int width){
-		;
-	}
-	public void setHeight(int width){
-		;
-	}
+//	public void setWidth(int width){
+//		;
+//	}
+//	public void setHeight(int width){
+//		;
+//	}
 
 	public BannerAdView(final Context context, final BannerAd response, final AdListener adListener) {
 		this(context, response, false, adListener);
@@ -206,12 +206,12 @@ public class BannerAdView extends RelativeLayout {
 			}
 		};
 		final float scale = mContext.getResources().getDisplayMetrics().density;
-		int width = 320;
+		int width = 300;
 		int height = 50;
 		if (this.response != null) {
-			int bannerWidth = this.response.getBannerWidth();
-			if (bannerWidth > 0)
-				width = bannerWidth;
+//			int bannerWidth = this.response.getBannerWidth();
+//			if (bannerWidth > 0)
+//				width = bannerWidth;
 			int bannerHeight = this.response.getBannerHeight();
 			if (bannerHeight > 0)
 				height = bannerHeight;
