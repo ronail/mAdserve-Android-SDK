@@ -1,10 +1,9 @@
 package com.adsdk.sdk;
 
-import static com.adsdk.sdk.Const.RESPONSE_ENCODING;
-
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -106,7 +105,12 @@ public class RequestBannerAd extends RequestAd<BannerAd> {
 
 			final String type = element.getAttribute("type");
 			element.normalize();
+			List<String> types = Arrays.asList("imageAd", "textAd", "mraidAd", "noAd");
+			int typeIndex = types.indexOf(type);
+			
+//			switch(typeIndex) {
 			if ("imageAd".equalsIgnoreCase(type)) {
+//			case 0:
 				response.setType(Const.IMAGE);
 				response.setBannerWidth(this.getValueAsInt(doc, "bannerwidth"));
 				response.setBannerHeight(this
@@ -120,12 +124,16 @@ public class RequestBannerAd extends RequestAd<BannerAd> {
 				response.setScale(this.getValueAsBoolean(doc, "scale"));
 				response.setSkipPreflight(this.getValueAsBoolean(doc,
 						"skippreflight"));
+//				break;
 			} else if ("textAd".equalsIgnoreCase(type)) {
+//			case 1:
 				response.setType(Const.TEXT);
 				response.setText(this.getValue(doc, "htmlString"));
-				String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
-				if (skipOverlay != null){
-					response.setSkipOverlay(Integer.parseInt(skipOverlay));
+				{
+					String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
+					if (skipOverlay != null){
+						response.setSkipOverlay(Integer.parseInt(skipOverlay));
+					}
 				}
 				final ClickType clickType = ClickType.getValue(this.getValue(
 						doc, "clicktype"));
@@ -135,7 +143,9 @@ public class RequestBannerAd extends RequestAd<BannerAd> {
 				response.setScale(this.getValueAsBoolean(doc, "scale"));
 				response.setSkipPreflight(this.getValueAsBoolean(doc,
 						"skippreflight"));
+//				break;
 			} else if ("mraidAd".equalsIgnoreCase(type)) {
+//			case 2:
 				response.setType(Const.MRAID);
 				response.setText(this.getValue(doc, "htmlString"));
 				String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
@@ -152,9 +162,34 @@ public class RequestBannerAd extends RequestAd<BannerAd> {
 				response.setSkipPreflight(this.getValueAsBoolean(doc,
 						"skippreflight"));
 			} else if ("noAd".equalsIgnoreCase(type))
+//				break;
+//			case 3:
 				response.setType(Const.NO_AD);
 			else
+//				default:
 				throw new RequestException("Unknown response type " + type);
+//			}
+			
+//			if (typeIndex != 3) {
+//				response.setBannerWidth(this.getValueAsInt(doc, "bannerwidth"));
+//				response.setBannerHeight(this
+//						.getValueAsInt(doc, "bannerheight"));
+//				final ClickType clickType = ClickType.getValue(this.getValue(
+//						doc, "clicktype"));
+//				response.setClickType(clickType);
+//				if (typeIndex != 0) {
+//					response.setText(this.getValue(doc, "htmlString"));
+//					String skipOverlay = this.getAttribute(doc, "htmlString", "skipoverlaybutton");
+//					if (skipOverlay != null){
+//						response.setSkipOverlay(Integer.parseInt(skipOverlay));
+//					}
+//				}
+//				response.setScale(this.getValueAsBoolean(doc, "scale"));
+//				response.setSkipPreflight(this.getValueAsBoolean(doc,
+//						"skippreflight"));
+//				response.setClickUrl(this.getValue(doc, "clickurl"));
+//				response.setRefresh(typeIndex == 2 ? 0 : this.getValueAsInt(doc, "refresh"));
+//			}
 
 		} catch (final ParserConfigurationException e) {
 			throw new RequestException("Cannot parse Response", e);

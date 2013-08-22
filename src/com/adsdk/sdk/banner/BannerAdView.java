@@ -206,7 +206,17 @@ public class BannerAdView extends RelativeLayout {
 			}
 		};
 		final float scale = mContext.getResources().getDisplayMetrics().density;
-		this.setLayoutParams(new RelativeLayout.LayoutParams((int)(300*scale+0.5f), (int)(50*scale+0.5f)));
+		int width = 320;
+		int height = 50;
+		if (this.response != null) {
+			int bannerWidth = this.response.getBannerWidth();
+			if (bannerWidth > 0)
+				width = bannerWidth;
+			int bannerHeight = this.response.getBannerHeight();
+			if (bannerHeight > 0)
+				height = bannerHeight;
+		}
+		this.setLayoutParams(new RelativeLayout.LayoutParams((int)(width *scale+0.5f), (int)(height *scale+0.5f)));
 		final FrameLayout.LayoutParams webViewParams = new FrameLayout.LayoutParams(
 				android.view.ViewGroup.LayoutParams.FILL_PARENT,
 				android.view.ViewGroup.LayoutParams.FILL_PARENT);
