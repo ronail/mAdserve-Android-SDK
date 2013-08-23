@@ -41,6 +41,7 @@ public class InAppWebView extends Activity {
 		webSettings.setSupportZoom(true);
 		webSettings.setBuiltInZoomControls(true);
 		webSettings.setUseWideViewPort(true);
+        webSettings.setLoadWithOverviewMode(true);	// make it scale to fit content
 		webView.setWebViewClient(new WebViewClient() {
 			@Override
 			public void onReceivedError(WebView view, int errorCode, String description, 
